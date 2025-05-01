@@ -156,7 +156,7 @@ const HomePage: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuccess }) 
     setStatusMessage("");
 
     try {
-      const response = await axios.post("http://localhost:5000/api/send-confirmation", formDat);
+      const response = await axios.post("https://marketing-nodejs.onrender.com/api/send-confirmation", formDat);
 
       if (response.data.success) {
         setStatusMessage("Confirmation email sent successfully!");
@@ -202,7 +202,7 @@ const handleSendOtp = async () => {
   try {
     setLoading(true);
     console.log(contactNumber);
-    const response = await fetch("http://localhost:5000/api/personal-info/send-otp", {
+    const response = await fetch("https://marketing-nodejs.onrender.com/api/personal-info/send-otp", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -234,7 +234,7 @@ const handleVerifyOtp = async () => {
   try {
     setLoading(true);
 
-    const response = await fetch("http://localhost:5000/api/personal-info/verify-otp", {
+    const response = await fetch("https://marketing-nodejs.onrender.com/api/personal-info/verify-otp", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -289,7 +289,7 @@ const handleUserRegister = async (e: React.FormEvent) => {
     console.log("Sending Data:", formData); // Debugging
 
     try {
-        const response = await fetch("http://localhost:5000/api/auth/register", {
+        const response = await fetch("https://marketing-nodejs.onrender.com/api/auth/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -359,7 +359,7 @@ const handleUserRegister = async (e: React.FormEvent) => {
       <div className="w-full sm:w-96 p-6 sm:h-auto h-full overflow-y-auto">
         {/* Title with margin-top to avoid overlap */}
         <h1 className="text-white text-3xl font-extrabold mb-6 sm:text-4xl text-center bg-transparent sm:absolute sm:top-16 sm:left-1/2 sm:transform sm:-translate-x-1/2">
-          Welcome to King Hanks
+          Welcome to markting service
         </h1>
 
         {/* Role Selection or Form based on User's Choice */}

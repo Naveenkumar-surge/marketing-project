@@ -28,7 +28,7 @@ const ContactAdminForm = () => {
     description: string;
   }) => {
     try {
-      const response = await fetch("http://localhost:5000/api/contact-admin", {
+      const response = await fetch("https://marketing-nodejs.onrender.com/api/contact-admin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -37,7 +37,7 @@ const ContactAdminForm = () => {
       const data = await response.json();
 
       if (response.ok) {
-        await fetch("http://localhost:5000/api/sendIssueConfirmation", {
+        await fetch("https://marketing-nodejs.onrender.com/api/sendIssueConfirmation", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

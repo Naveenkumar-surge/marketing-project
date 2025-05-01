@@ -25,7 +25,7 @@ const CustomerDetailsHistory = () => {
 
   const fetchWorkers = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/auth/getCustomerDetails');
+      const res = await axios.get('https://marketing-nodejs.onrender.com/api/auth/getCustomerDetails');
       const filtered = res.data.filter((b: any) => b.approved ===true);
       setWorkers(filtered);
     } catch (error) {
@@ -43,7 +43,7 @@ const CustomerDetailsHistory = () => {
     if (type === 'personal') {
       const email = workers[index]?.email;
       try {
-        const res = await axios.get(`http://localhost:5000/api/personal-info/personaldetails?email=${email}`);
+        const res = await axios.get(`https://marketing-nodejs.onrender.com/api/personal-info/personaldetails?email=${email}`);
         setPersonalDetails(res.data);
       } catch (error) {
         console.error('Failed to fetch personal info:', error);
@@ -57,7 +57,7 @@ const CustomerDetailsHistory = () => {
 
     if (personalDetails?.aadharFileId) {
       try {
-        const { data } = await axios.get(`http://localhost:5000/api/personal-info/filebase64/${personalDetails.aadharFileId}`);
+        const { data } = await axios.get(`https://marketing-nodejs.onrender.com/api/personal-info/filebase64/${personalDetails.aadharFileId}`);
         setAadharBase64(`data:application/pdf;base64,${data.base64}`);
       } catch (error) {
         console.error('Error fetching Aadhar base64:', error);
@@ -68,7 +68,7 @@ const CustomerDetailsHistory = () => {
 
     if (personalDetails?.panFileId) {
       try {
-        const { data } = await axios.get(`http://localhost:5000/api/personal-info/filebase64/${personalDetails.panFileId}`);
+        const { data } = await axios.get(`https://marketing-nodejs.onrender.com/api/personal-info/filebase64/${personalDetails.panFileId}`);
         setPanBase64(`data:application/pdf;base64,${data.base64}`);
       } catch (error) {
         console.error('Error fetching PAN base64:', error);
@@ -91,7 +91,7 @@ const CustomerDetailsHistory = () => {
 
   const handleApprove = async (email: string) => {
     try {
-      await axios.put('http://localhost:5000/api/workers/approve', { email });
+      await axios.put('https://marketing-nodejs.onrender.com/api/workers/approve', { email });
       alert('User approved successfully!');
     } catch (error) {
       console.error('Approval failed:', error);
@@ -106,7 +106,7 @@ const CustomerDetailsHistory = () => {
     if (!confirmed) return;
   
     try {
-      await axios.delete(`http://localhost:5000/api/personal-info/delete?email=${personalDetails.email}`);
+      await axios.delete(`https://marketing-nodejs.onrender.com/api/personal-info/delete?email=${personalDetails.email}`);
   
       alert("Personal info deleted and email sent successfully.");
     } catch (error) {

@@ -46,7 +46,7 @@ const BankDetailsForm = ({ email }: { email: string }) => {
   useEffect(() => {
     const fetchBankDetails = async () => {
       try {
-        const response = await axios.post("http://localhost:5000/api/get-bank-details", {
+        const response = await axios.post("https://marketing-nodejs.onrender.com/api/get-bank-details", {
           email: userEmail, // make sure this key matches backend's expectation
         });
   
@@ -95,7 +95,7 @@ const BankDetailsForm = ({ email }: { email: string }) => {
     setGeneratedOtp(otp);
 
     try {
-      const response = await fetch("http://localhost:5000/api/send-otp", {
+      const response = await fetch("https://marketing-nodejs.onrender.com/api/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: formData.email, otp }),
@@ -151,7 +151,7 @@ const BankDetailsForm = ({ email }: { email: string }) => {
       datas.append("bankDoc", bankDoc);
     }
     try {
-      const response = await fetch("http://localhost:5000/api/register", {
+      const response = await fetch("https://marketing-nodejs.onrender.com/api/register", {
         method: "POST",
       body: datas, // no headers set here
     });
@@ -159,7 +159,7 @@ const BankDetailsForm = ({ email }: { email: string }) => {
       const data = await response.json();
 
       if (response.ok) {
-        await fetch("http://localhost:5000/api/sendWelcomeEmail", {
+        await fetch("https://marketing-nodejs.onrender.com/api/sendWelcomeEmail", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: formData.email }),
@@ -187,7 +187,7 @@ const BankDetailsForm = ({ email }: { email: string }) => {
   const handleAdminSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/contact-admin", {
+      await axios.post("https://marketing-nodejs.onrender.com/api/contact-admin", {
         issueType,
         email: userEmail,
         description,

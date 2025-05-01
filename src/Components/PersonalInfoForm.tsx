@@ -53,7 +53,7 @@ const PersonalInfoForm = ({ email }: { email: string }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/personal-info/personaldetails?email=${email}`);
+        const res = await axios.get(`https://marketing-nodejs.onrender.com/api/personal-info/personaldetails?email=${email}`);
         if (res.data && Object.keys(res.data).length > 0) {
           setExistingData(res.data);
           setSubmitted(true);
@@ -110,7 +110,7 @@ const PersonalInfoForm = ({ email }: { email: string }) => {
     formData.append("aadharNumber", aadharNumber);
     formData.append("panNumber", panNumber);
     try {
-      await axios.post("http://localhost:5000/api/personal-info/", formData);
+      await axios.post("https://marketing-nodejs.onrender.com/api/personal-info/", formData);
       toast.success("Personal Info submitted!");
       setSubmitted(true);
       

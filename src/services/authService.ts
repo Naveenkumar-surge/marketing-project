@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Base URL (use .env for production)
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = "https://marketing-nodejs.onrender.com/api";
 
 // User Login
 export const userLogin = async (email: string, password: string) => {

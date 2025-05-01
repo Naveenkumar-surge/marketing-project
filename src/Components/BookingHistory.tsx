@@ -16,7 +16,7 @@ const BookingHistory = () => {
 
   const fetchCompletedBookings = async (email: string) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/by-worker/${email}`);
+      const res = await axios.get(`https://marketing-nodejs.onrender.com/api/by-worker/${email}`);
       const completedBookings = res.data.filter((b: any) => b.workcomplted === 'done');
       setCompleted(completedBookings);
     } catch (error) {

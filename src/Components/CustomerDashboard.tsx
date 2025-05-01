@@ -119,7 +119,7 @@ const CustomerDashboard: React.FC<CustomerDashboardProps> = ({ onLogout }) => {
               if (!userEmail) return;
           
               try {
-                const response = await fetch(`http://localhost:5000/api/by-customer/${userEmail}`);
+                const response = await fetch(`https://marketing-nodejs.onrender.com/api/by-customer/${userEmail}`);
                 if (!response.ok) throw new Error("No bookings found");
           
                 const data = await response.json();
@@ -211,7 +211,7 @@ const CustomerDashboard: React.FC<CustomerDashboardProps> = ({ onLogout }) => {
       label: customerLocation.label || "",
     };
 
-    const response = await fetch("http://localhost:5000/api/auth/store-location", {
+    const response = await fetch("https://marketing-nodejs.onrender.com/api/auth/store-location", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -265,7 +265,7 @@ params.append("fromDate", fromDateFormatted);
 params.append("toDate", toDateFormatted);
 
 console.log(params.toString()); // Debug: check the output
-const res = await fetch(`http://localhost:5000/api/auth/getByEmail/${userEmail}`, {
+const res = await fetch(`https://marketing-nodejs.onrender.com/api/auth/getByEmail/${userEmail}`, {
   method: "GET",
   headers: {
     "Content-Type": "application/json",
@@ -292,14 +292,14 @@ if (!user.approved) {
   toast.error("Your account is not yet approved. Please wait for admin approval.");
   return;
 }
-const re = await fetch(`http://localhost:5000/api/auth/location/${userEmail}`);
+const re = await fetch(`https://marketing-nodejs.onrender.com/api/auth/location/${userEmail}`);
 const dat = await re.json();
 setLocationData(dat);
              if(dat===null){
                 toast.error("before booking please select ans send your location");
                 return;
              }
-            const response = await fetch(`http://localhost:5000/api/available?${params}`);
+            const response = await fetch(`https://marketing-nodejs.onrender.com/api/available?${params}`);
             if (!response.ok) {
                 throw new Error("Failed to fetch workers");
             }
@@ -319,7 +319,7 @@ setLocationData(dat);
     const handlePayment = async (worker: Worker) => {
         try {
             // Step 1: Create booking + Razorpay order
-            const bookingResponse = await fetch("http://localhost:5000/bookings/create", {
+            const bookingResponse = await fetch("https://marketing-nodejs.onrender.com/bookings/create", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -362,7 +362,7 @@ setLocationData(dat);
                 description: `Booking for ${selectedService}`,
                 handler: async function (response: any) {
                     // Step 3: Update payment status
-                    await fetch("http://localhost:5000/bookings/updatePayment", {
+                    await fetch("https://marketing-nodejs.onrender.com/bookings/updatePayment", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -377,13 +377,13 @@ setLocationData(dat);
                     
                     if (userEmail && worker?.email) {
                       try {
-                        const res = await fetch(`http://localhost:5000/api/auth/location/${userEmail}`);
+                        const res = await fetch(`https://marketing-nodejs.onrender.com/api/auth/location/${userEmail}`);
                         const data = await res.json();
                 
                         if (!data || !data.latitude || !data.longitude) {
                           toast.error("Stored location not found.");
                         } else {
-                          const sendRes = await fetch("http://localhost:5000/api/auth/send-location-email", {
+                          const sendRes = await fetch("https://marketing-nodejs.onrender.com/api/auth/send-location-email", {
                             method: "POST",
                             headers: {
                               "Content-Type": "application/json"
@@ -407,7 +407,7 @@ setLocationData(dat);
                       }
                     }
                     // Step 4: Mark worker as busy (optional - backend should handle this ideally)
-                    await fetch("http://localhost:5000/api/markBusy", {
+                    await fetch("https://marketing-nodejs.onrender.com/api/markBusy", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"

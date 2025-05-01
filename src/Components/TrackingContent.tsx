@@ -41,7 +41,7 @@ const TrackingContent = () => {
 
           try {
             const res = await axios.get(
-              `http://localhost:5000/api/auth/tracking-link?workerEmail=${email}`
+              `https://marketing-nodejs.onrender.com/api/auth/tracking-link?workerEmail=${email}`
             );
 
             const { latitude, longitude } = res.data;

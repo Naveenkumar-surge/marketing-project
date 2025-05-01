@@ -47,7 +47,7 @@ const DashboardContent = () => {
 
     try {
       // Fetch latest user info using email
-      const res = await fetch(`http://localhost:5000/api/auth/getByEmail/${workerName}`, {
+      const res = await fetch(`https://marketing-nodejs.onrender.com/api/auth/getByEmail/${workerName}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -100,7 +100,7 @@ const DashboardContent = () => {
       };
   
       // Submit worker service registration
-      const response = await fetch("http://localhost:5000/api/saveWorkerDetails", {
+      const response = await fetch("https://marketing-nodejs.onrender.com/api/saveWorkerDetails", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

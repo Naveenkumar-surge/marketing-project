@@ -33,7 +33,7 @@ const WorkerDetails = () => {
 
   const fetchWorkers = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/auth/getworkersDetails');
+      const res = await axios.get('https://marketing-nodejs.onrender.com/api/auth/getworkersDetails');
       const filtered = res.data.filter((b: any) => b.approved ===false);
       setWorkers(filtered);
     } catch (error) {
@@ -53,14 +53,14 @@ const WorkerDetails = () => {
     const email = workers[index]?.email;
     if (type === 'personal') {
       try {
-        const res = await axios.get(`http://localhost:5000/api/personal-info/personaldetails?email=${email}`);
+        const res = await axios.get(`https://marketing-nodejs.onrender.com/api/personal-info/personaldetails?email=${email}`);
         setPersonalDetails(res.data);
       } catch (error) {
         console.error('Failed to fetch personal info:', error);
       }
     } else if (type === 'bank') {
       try {
-        const res = await axios.get(`http://localhost:5000/api/details?email=${email}`);
+        const res = await axios.get(`https://marketing-nodejs.onrender.com/api/details?email=${email}`);
         setBankDetails(res.data);
       } catch (error) {
         console.error('Failed to fetch bank info:', error);
@@ -74,7 +74,7 @@ const WorkerDetails = () => {
 
     try {
       if (personalDetails?.aadharFileId) {
-        const { data } = await axios.get(`http://localhost:5000/api/personal-info/filebase64/${personalDetails.aadharFileId}`);
+        const { data } = await axios.get(`https://marketing-nodejs.onrender.com/api/personal-info/filebase64/${personalDetails.aadharFileId}`);
         setAadharBase64(`data:application/pdf;base64,${data.base64}`);
       }
     } catch (error) {
@@ -85,7 +85,7 @@ const WorkerDetails = () => {
 
     try {
       if (personalDetails?.panFileId) {
-        const { data } = await axios.get(`http://localhost:5000/api/personal-info/filebase64/${personalDetails.panFileId}`);
+        const { data } = await axios.get(`https://marketing-nodejs.onrender.com/api/personal-info/filebase64/${personalDetails.panFileId}`);
         setPanBase64(`data:application/pdf;base64,${data.base64}`);
       }
     } catch (error) {
@@ -99,7 +99,7 @@ const WorkerDetails = () => {
     setLoadingBankDoc(true);
     try {
       if (bankDetails?.bankDocFileId) {
-        const { data } = await axios.get(`http://localhost:5000/api/filebase64/${bankDetails.bankDocFileId}`);
+        const { data } = await axios.get(`https://marketing-nodejs.onrender.com/api/filebase64/${bankDetails.bankDocFileId}`);
         setBankDocBase64(`data:application/pdf;base64,${data.base64}`);
       }
     } catch (error) {
@@ -115,7 +115,7 @@ const WorkerDetails = () => {
     if (!confirmDelete) return;
 
     try {
-        await axios.delete(`http://localhost:5000/api/delete?email=${bankDetails.email}`);
+        await axios.delete(`https://marketing-nodejs.onrender.com/api/delete?email=${bankDetails.email}`);
         alert("Personal info deleted and email sent successfully.");
       } catch (error) {
         console.error("Failed to delete personal info or send email:", error);
@@ -140,7 +140,7 @@ const WorkerDetails = () => {
 
   const handleApprove = async (email: string) => {
     try {
-      await axios.put('http://localhost:5000/api/workers/approve', { email });
+      await axios.put('https://marketing-nodejs.onrender.com/api/workers/approve', { email });
       alert('User approved successfully!');
     } catch (error) {
       console.error('Approval failed:', error);
@@ -154,7 +154,7 @@ const WorkerDetails = () => {
     if (!confirmed) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/personal-info/delete?email=${personalDetails.email}`);
+      await axios.delete(`https://marketing-nodejs.onrender.com/api/personal-info/delete?email=${personalDetails.email}`);
       alert("Personal info deleted and email sent successfully.");
     } catch (error) {
       console.error("Failed to delete personal info or send email:", error);

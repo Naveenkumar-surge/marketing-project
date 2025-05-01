@@ -30,7 +30,7 @@ const DashboardCustomer = () => {
 
   const fetchBookings = async (email: string) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/by-customer/${email}`);
+      const res = await axios.get(`https://marketing-nodejs.onrender.com/api/by-customer/${email}`);
       const filtered = res.data.filter(
         (b: any) => b.workcomplted !== 'done' && b.paymentStatus === 'Paid'
       );
@@ -49,7 +49,7 @@ const DashboardCustomer = () => {
 
     if (type === 'personal') {
       try {
-        const res = await axios.get(`http://localhost:5000/api/personal-info/personaldetails?email=${workerEmail}`);
+        const res = await axios.get(`https://marketing-nodejs.onrender.com/api/personal-info/personaldetails?email=${workerEmail}`);
         setPersonalDetails(res.data);
       } catch (error) {
         console.error('Error fetching personal info:', error);
@@ -68,7 +68,7 @@ const DashboardCustomer = () => {
     try {
       const { workerEmail, fromDate, toDate } = booking;
 
-      await axios.put('http://localhost:5000/api/mark-work-done', {
+      await axios.put('https://marketing-nodejs.onrender.com/api/mark-work-done', {
         customerEmail: email,
         workerEmail,
         fromDate,

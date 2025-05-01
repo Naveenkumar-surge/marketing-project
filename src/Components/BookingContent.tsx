@@ -16,7 +16,7 @@ const BookingContent = () => {
 
   const fetchBookings = async (email: string) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/by-worker/${email}`);
+      const res = await axios.get(`https://marketing-nodejs.onrender.com/api/by-worker/${email}`);
       const filtered = res.data.filter((b: any) => b.workcomplted !== 'done' && b.paymentStatus === 'Paid');
       setBookings(filtered);
     } catch (error) {
@@ -33,7 +33,7 @@ const BookingContent = () => {
     if (type === 'personal') {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/personal-info/personaldetails?email=${workerEmail}`
+          `https://marketing-nodejs.onrender.com/api/personal-info/personaldetails?email=${workerEmail}`
         );
         setPersonalDetails(res.data);
       } catch (error) {

@@ -18,8 +18,8 @@ const NavigationBar: React.FC<{ setActiveSection: (section: string) => void }> =
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center space-x-2">
-          <img src="/image.jpg" alt="King Card" className="w-8 h-8 rounded-full" />
-          <h1 className="text-white text-xl font-bold">King Carding</h1>
+          <img src="/image.webp" alt="King Card" className="w-8 h-8 rounded-full" />
+          <h1 className="text-white text-xl font-bold">welcome to marketing</h1>
         </div>
 
         {/* Hamburger Icon */}
