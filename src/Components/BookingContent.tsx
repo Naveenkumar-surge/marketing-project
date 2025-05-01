@@ -17,7 +17,7 @@ const BookingContent = () => {
   const fetchBookings = async (email: string) => {
     try {
       const res = await axios.get(`https://marketing-nodejs.onrender.com/api/by-worker/${email}`);
-      const filtered = res.data.filter((b: any) => b.workcomplted !== 'done' && b.paymentStatus === 'Paid');
+      const filtered = res.data.filter((b: any) => b.workcomplted === 'pending' && b.paymentStatus === 'Paid');
       setBookings(filtered);
     } catch (error) {
       console.error('Error fetching bookings:', error);

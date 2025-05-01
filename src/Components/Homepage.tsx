@@ -366,7 +366,7 @@ const handleUserRegister = async (e: React.FormEvent) => {
         {!role ? (
           <>
             {/* Buttons for mobile view, positioned at the bottom */}
-            <div className="sm:hidden absolute bottom-4 left-0 right-0 flex justify-center space-x-4">
+            <div className="sm:hidden absolute bottom-12 left-0 right-0 flex justify-center space-x-4">
               <button onClick={() => setRole("user")} className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition-all duration-300 ease-in-out">
                 User
               </button>
