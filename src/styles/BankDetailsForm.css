@@ -1,0 +1,233 @@
+/* BankDetailsForm.css – Ultra‑Compact with 6px Spacing & Fixed Tab Header */
+
+/* Container */
+.bank-form-wrapper {
+  overflow-y: auto !important;
+  max-height: 100vh !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  margin-top: -50px;
+}
+.top-tab-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;              /* space between buttons */
+  padding: 1rem 0;
+  flex-wrap: wrap;        /* for responsiveness */
+  background-color: #f0f4f8; /* optional background */
+  border-bottom: 1px solid #ccc;
+}
+
+.tab-button {
+  padding: 0.6rem 1.5rem;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: #1f2937; /* dark gray */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-bottom: 40px;
+}
+
+.tab-button:hover {
+  background-color: #374151; /* darker on hover */
+}
+
+.tab-button.active {
+  background-color: #2563eb; /* blue when active */
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .top-tab-buttons {
+    flex-direction: column;
+  }
+
+  .tab-button {
+    width: 90%;
+    text-align: center;
+    margin-top: 40px;
+  }
+}
+
+/* Mobile responsiveness */
+  /* Override any Tailwind p-*/ 
+  .bank-form-wrapper[class*="p-"] {
+    padding: 6px !important;
+  }
+  
+  /* Override any Tailwind space-y-*/
+  .bank-form-wrapper[class*="space-y-"] > * {
+    margin-top: 0 !important;
+    margin-bottom: 6px !important;    /* 6px between children */
+  }
+  
+  /* Heading (if present) */
+  .bank-form-wrapper h2 {
+    margin: 0 0 6px !important;        /* 6px below heading */
+    padding: 0 !important;
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+    text-align: center;
+  }
+  
+  /* Labels */
+  .bank-form-wrapper label {
+    display: block !important;
+    font-size: 10px !important;
+    margin: 0 0 2px !important;        /* small gap under label */
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+
+  }
+  
+  /* Inputs / selects / textarea */
+  .bank-form-wrapper input,
+  .bank-form-wrapper select,
+  .bank-form-wrapper textarea {
+    width: 100% !important;
+    padding: 9px !important;           /* 6px padding */
+    margin: 0 0 9px !important;        /* 6px below fields */
+    font-size: 20px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+    line-height: 2.2 !important;
+  }
+  
+  /* Inline OTP row */
+  .bank-form-wrapper .otp-row,
+  .bank-form-wrapper .otp-actions {
+    display: flex !important;
+    gap: 6px !important;               /* 6px between input & button */
+    margin: 0 0 6px !important;        /* 6px below row */
+  }
+  
+  /* Override any flex/gap utilities */
+  .bank-form-wrapper[class*="gap-"] {
+    gap: 6px !important;
+  }
+  
+  /* Buttons */
+  .send-otp-btn,
+  .form-button,
+  .submit-btn,
+  .bank-form-wrapper button {
+    font-size: 9px !important;
+    padding: 6px 6px !important;       /* 6px all around */
+    border: none !important;
+    border-radius: 2px !important;
+    cursor: pointer !important;
+    line-height: 1 !important;
+  }
+  
+  /* Send OTP */
+  .send-otp-btn {
+    background: #2563eb !important;
+    color: #29be33 !important;
+  }
+  .send-otp-btn:hover {
+    background: #1d4ed8 !important;
+  }
+  
+  /* Verify OTP */
+  .form-button {
+    background: #16a34a !important;
+    color: #fff !important;
+  }
+  .form-button:hover {
+    background: #15803d !important;
+  }
+  
+  /* Submit */
+  .submit-btn {
+    background: #4CAF50 !important; /* Light green */
+    color: #fff !important;
+    width: 100% !important;
+  }
+  .submit-btn:hover {
+    background: #45a049 !important; /* Darker green */
+  }
+  .submit-btn:disabled {
+    background: #94a3b8 !important;
+    cursor: not-allowed !important;
+  }
+  
+  /* Reset top margin on first child */
+  .bank-form-wrapper > *:first-child {
+    margin-top: 0 !important;
+  }
+  
+/* --- Tab Header --- */
+.tab-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+  /* --- Tab Buttons --- */
+.tab-header button {
+  flex: 1;
+  max-width: 200px;
+  padding: 0.75rem 1rem;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #a8c0df;
+  color: #1963ca;
+  border: none;
+  border-radius: 0.5rem 0.5rem 0 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-header button:hover {
+  background-color: #cbd5e1;
+}
+
+.tab-header button.active {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+  /* Mobile tweaks */
+  @media (max-width: 480px) {
+    .bank-form-wrapper {
+      max-width: 95% !important;
+      padding: 6px !important;
+      font-size: 9px !important;
+    }
+    .bank-form-wrapper h2 {
+      font-size: 11px !important;
+      margin-bottom: 6px !important;
+    }
+    .bank-form-wrapper input,
+    .bank-form-wrapper select,
+    .bank-form-wrapper textarea {
+      padding: 6px !important;
+      margin-bottom: 6px !important;
+      font-size: 9px !important;
+    }
+    .bank-form-wrapper .otp-row,
+    .bank-form-wrapper .otp-actions {
+      gap: 6px !important;
+      margin-bottom: 6px !important;
+      flex-direction: column !important;
+    }
+    .tab-header button {
+      padding: 6px 6px !important;
+      font-size: 8px !important;
+    }
+    .tab-header {
+      gap: 6px !important;
+      margin-top: 25px !important;
+    }
+  }
+  

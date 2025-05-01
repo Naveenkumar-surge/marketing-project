@@ -1,0 +1,118 @@
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+
+    /* Display bottom navigation on mobile */
+    .bottom-nav {
+        display: flex;
+        justify-content: space-between;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: white;
+        border-top: 1px solid #e5e5e5;
+        padding: 10px 0;
+        box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .bottom-nav button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 14px;
+        color: #4A4A4A;
+    }
+
+    /* Mobile overlay style for "My Info" */
+    .my-info-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        visibility: hidden;
+    }
+
+    .my-info-overlay.show {
+        visibility: visible;
+    }
+
+    .my-info-overlay-content {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        width: 80%;
+        max-width: 400px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .my-info-overlay button {
+        margin-top: 15px;
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    /* Add a back button to close the overlay */
+    .back-button {
+        background-color: transparent;
+        border: none;
+        color: #4CAF50;
+        font-size: 18px;
+        cursor: pointer;
+        text-align: left;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    /* Style for each bottom nav button icon */
+    .bottom-nav button svg {
+        font-size: 22px;
+    }
+
+    /* Make the map container centered and smaller on mobile */
+    .map-container {
+        margin: 0 auto;
+        width: 90%;
+        padding: 10px;
+    }
+
+    .map-container .leaflet-container {
+        height: 300px !important; /* reduce map height on mobile */
+        border-radius: 1rem;
+    }
+}
+
+/* Desktop Layout */
+@media (min-width: 769px) {
+    /* Sidebar should be visible */
+    .sidebar {
+        display: block;
+    }
+
+    /* Bottom Navigation should be hidden on desktop */
+    .bottom-nav {
+        display: none;
+    }
+
+    /* Desktop map container full size */
+    .map-container {
+        width: 100%;
+    }
+
+    .map-container .leaflet-container {
+        height: 500px;
+    }
+}

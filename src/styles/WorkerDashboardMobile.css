@@ -1,0 +1,201 @@
+/* --------------------------------------------------
+   Mobile Topbar (only on screens ≤ 768px)
+   -------------------------------------------------- */
+   /* DashboardContentMobile.css */
+
+/* On screens ≤ 768px, constrain & center the registration card */
+@media (max-width: 768px) {
+  /* Target the wrapper around your form */
+  .registration-container {
+    max-width: 90%;        /* never wider than 90% of viewport */
+    margin: 2rem auto;     /* vertical space + horizontal centering */
+    padding: 1rem;         /* a bit more breathing room */
+  }
+}
+
+   @media (max-width: 768px) {
+    /* Pin the header to the top, shrink padding */
+    /* Second row: support icon, name, logout */
+    header .flex.items-center {
+      width: 100%;
+      justify-content: space-between;
+      padding-top: 0.25rem;
+    }
+    header .flex.items-center > *:not(h2) {
+      margin-left: 0.5rem;
+    }
+    header .flex.items-center svg {
+      font-size: 1rem;            /* ~16px */
+    }
+    header .flex.items-center span {
+      font-size: 0.75rem;         /* ~12px */
+    }
+    header .flex.items-center button {
+      padding: 0.25rem 0.75rem;
+      font-size: 0.75rem;
+    }
+  
+    /* Push the rest of the page down below the fixed header */
+    main {
+      margin-top: 3rem;           /* adjust to match header height */
+    }
+  }
+  
+  /* --------------------------------------------------
+     Overlay style when "My Info" is clicked
+     -------------------------------------------------- */
+  .info-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 1000;
+    padding: 20px;
+  }
+  .info-overlay-content {
+    background-color: #ffffff;
+    border-radius: 16px 16px 0 0;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-40px);
+    transition: transform 0.3s ease-in-out;
+    margin-bottom: 60px;
+  }
+  .custom-circle-wrapper {
+    margin-left:-9px; /* Or try 4px or 2px if you want it closer */
+  }
+  
+  /* --------------------------------------------------
+     Sub‑menu buttons inside the overlay
+     -------------------------------------------------- */
+  .sub-nav-btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 12px 16px;
+    margin: 8px 0;
+    background-color: #f9fafb;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  .sub-nav-btn:hover {
+    background-color: #e2e8f0;
+  }
+  
+  /* --------------------------------------------------
+     Bottom Navigation for Mobile
+     -------------------------------------------------- */
+  .mobile-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px 0;
+    z-index: 40;
+    box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.05);
+  }
+  .mobile-nav button {
+    background: none;
+    border: none;
+    color: #3b82f6;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    flex: 1;
+    transition: background-color 0.2s ease;
+  }
+  .mobile-nav button:hover {
+    background-color: #f0f9ff;
+    border-radius: 10px;
+  }
+  .mobile-nav svg {
+    font-size: 18px;
+    margin-bottom: 2px;
+  }
+  /* --------------------------------------------------
+   Mobile Topbar Styling
+   -------------------------------------------------- */
+
+@media (max-width: 768px) {
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0.75rem 1rem;
+    background: #1e3a8a; /* Dark blue background */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 50;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  header h2 {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  header .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  header .topbar-right svg {
+    color: #e0f2fe; /* light blue for icon */
+    font-size: 1.125rem;
+  }
+
+  header .topbar-right span {
+    color: #ffffff;
+    font-size: 0.875rem;
+  }
+
+  header .topbar-right button {
+    background-color: #ef4444;
+    color: #ffffff;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+  }
+
+  header .topbar-right button:hover {
+    background-color: #dc2626;
+  }
+
+  main {
+    margin-top: 4rem; /* Space for fixed topbar */
+  }
+  .custom-circle-wrapper {
+    margin-left: 4px; /* Or try 4px or 2px if you want it closer */
+  }
+  
+  
+}

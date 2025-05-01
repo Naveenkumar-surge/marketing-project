@@ -1,0 +1,119 @@
+/* Prevent scrolling */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+  }
+  .text-center{
+    margin-top: 20px;
+  }
+  /* Fullscreen flex container */
+  .contact-form-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-top: -8px;
+  }
+  
+  /* Form wrapper */
+  .contact-form-wrapper {
+    background-color: #fff;
+    width: 100%;
+    max-width: 500px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: -50px; /* Default for mobile */
+  }
+  /* Form title */
+  .contact-form-wrapper h2 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Label */
+  .contact-form-wrapper label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 200;
+    font-size: 12px;
+    margin-top: 10px;
+  }
+  .font-medium{
+    margin-top: -20px;
+  }
+  /* Inputs and textarea */
+  .contact-form-wrapper input,
+  .contact-form-wrapper select,
+  .contact-form-wrapper textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+  /* Button */
+  .contact-form-wrapper button {
+    width: 100%;
+    padding: 10px;
+    background-color: #2563eb;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .contact-form-wrapper button:hover {
+    background-color: #1e40af;
+  }
+  
+  /* Message box */
+  .contact-form-wrapper .message-box {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  
+  .contact-form-wrapper .message-box.success {
+    background-color: #dcfce7;
+    color: #15803d;
+  }
+  
+  .contact-form-wrapper .message-box.error {
+    background-color: #fee2e2;
+    color: #b91c1c;
+  }
+  /* ------------ Desktop Overrides (≥769px) ------------ */
+@media (min-width: 769px) {
+  /* Allow page scrolling on desktop */
+  body, html {
+    overflow: auto;
+  }
+
+  /* Vertically align top, allow wrapper to scroll */
+  .contact-form-page {
+    align-items: flex-start;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    height: auto;
+  }
+
+  /* Limit wrapper height and enable inner scrolling */
+  .contact-form-wrapper {
+    margin-top: 30px; /* Push it slightly down from topbar */
+  }
+}

@@ -1,0 +1,30 @@
+/* Mobile view cards */
+.mobile-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .booking-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .booking-card p {
+    margin: 0.25rem 0;
+  }
+  
+  .booking-card button {
+    width: 100%;
+  }
+  
+  /* Hide the table on small screens */
+  @media (max-width: 768px) {
+    table {
+      display: none;
+    }
+  }
+  
