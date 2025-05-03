@@ -1,7 +1,14 @@
 // Add imports at the top
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import axios from 'axios';
+import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
+GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`; // Webpack 5 or Vite
 
+// ✅ Set the workerSrc only once
+
+interface Props {
+  base64: string;
+}
 const CustomerDetails = () => {
   const [workers, setWorkers] = useState<any[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
@@ -12,16 +19,28 @@ const CustomerDetails = () => {
   const [panBase64, setPanBase64] = useState<string | null>(null);
   const [loadingAadhar, setLoadingAadhar] = useState(false);
   const [loadingPan, setLoadingPan] = useState(false);
-
+   const [currentPage, setCurrentPage] = useState(1);
+     const [isMobile, setIsMobile] = useState(false);
+      const itemsPerPage = 6;
+      useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+      }, []);
   useEffect(() => {
     fetchWorkers();
   }, []);
 
-  useEffect(() => {
-    if (personalStep === 2 && personalDetails) {
-      fetchBase64Files();
-    }
-  }, [personalStep]);
+   useEffect(() => {
+      // Always call for personal files only on desktop
+      if (!isMobile && slideType === 'personal' && personalStep === 2 && personalDetails) {
+        fetchBase64Files();
+      }
+    
+    }, [personalStep, isMobile, slideType, personalDetails]);
+    
+    
 
   const fetchWorkers = async () => {
     try {
@@ -98,7 +117,43 @@ const CustomerDetails = () => {
       alert('Failed to approve user.');
     }
   };
-
+   useEffect(() => {
+    const fetchAadharAndPan = async () => {
+      if (personalStep === 2 && personalDetails?.aadharFileId && !aadharBase64) {
+        setLoadingAadhar(true);
+        try {
+          const { data } = await axios.get(
+            `https://marketing-nodejs.onrender.com/api/personal-info/filebase64/${personalDetails.aadharFileId}`
+          );
+          setAadharBase64(`data:application/pdf;base64,${data.base64}`);
+          console.log("yes mobile");
+          console.log(`data:application/pdf;base64,${data.base64}`);
+        } catch (error) {
+          console.error('Error fetching Aadhar base64:', error);
+        } finally {
+          setLoadingAadhar(false);
+        }
+      }
+  
+      if (personalStep === 3 && personalDetails?.panFileId && !panBase64) {
+        setLoadingPan(true);
+        try {
+          const { data } = await axios.get(
+            `https://marketing-nodejs.onrender.com/api/personal-info/filebase64/${personalDetails.panFileId}`
+          );
+          setPanBase64(`data:application/pdf;base64,${data.base64}`);
+        } catch (error) {
+          console.error('Error fetching PAN base64:', error);
+        } finally {
+          setLoadingPan(false);
+        }
+      }
+    };
+  
+    if (slideType === 'personal' && isMobile) {
+      fetchAadharAndPan();
+    }
+  }, [personalStep, slideType, personalDetails, aadharBase64, panBase64]);
   const handleDeletePersonalInfo = async () => {
     if (!personalDetails?.email) return;
   
@@ -114,14 +169,35 @@ const CustomerDetails = () => {
       alert("Something went wrong while deleting or sending email.");
     }
   };
-  
-
+  const PDFViewer = ({ base64 }: Props) => {
+      const canvasRef = useRef<HTMLCanvasElement>(null);
+    
+      useEffect(() => {
+        const loadingTask = getDocument({ data: atob(base64.split(",")[1]) });
+        loadingTask.promise.then((pdf) => {
+          pdf.getPage(1).then((page) => {
+            const viewport = page.getViewport({ scale: 1.5 });
+            const canvas = canvasRef.current;
+            if (canvas) {
+              const context = canvas.getContext("2d");
+              canvas.height = viewport.height;
+              canvas.width = viewport.width;
+              page.render({ canvasContext: context!, viewport });
+            }
+          });
+        });
+      }, [base64]);
+    
+      return <canvas ref={canvasRef} className="w-full border rounded" />;
+    };
   const worker = currentIndex !== null ? workers[currentIndex] : null;
-
+  const indexOfLastWorker = currentPage * itemsPerPage;
+  const indexOfFirstWorker = indexOfLastWorker - itemsPerPage;
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   return (
     <div className="p-4 relative">
       <h2 className="text-xl font-bold mb-4">Customer Details</h2>
-
+      <div className="hidden md:block">
       <table className="min-w-full bg-white border border-gray-200">
         <thead>
           <tr className="bg-gray-100 text-left">
@@ -162,12 +238,65 @@ const CustomerDetails = () => {
           ))}
         </tbody>
       </table>
+      <div className="flex justify-center mt-4">
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Prev
+          </button>
+          <span className="mx-2">{currentPage}</span>
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+            onClick={() => paginate(currentPage + 1)}
+            disabled={currentPage === Math.ceil(workers.length / itemsPerPage)}
+          >
+            Next
+          </button>
+        </div>
+      </div>
+      <div className="md:hidden max-h-[80vh] overflow-y-auto flex flex-col items-center gap-4 px-4 py-4">
+  {workers
+    .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+    .map((worker, index) => {
+      const globalIndex = (currentPage - 1) * itemsPerPage + index;
+      return (
+        <div key={worker.email} className="bg-white p-4 rounded shadow-md w-full max-w-xs">
+          <div className="font-semibold text-lg text-center bg-transparent">{worker.name}</div>
+          <div className="text-center bg-transparent">{worker.email}</div>
+          <div className="text-center bg-transparent">{worker.contactNumber}</div>
 
+          <div className="mt-4 flex justify-between">
+            <button
+              className="bg-blue-500 text-white px-2 py-1 rounded w-[48%]"
+              onClick={() => openSlide(globalIndex, 'personal')}
+            >
+              Personal Info
+            </button>
+          </div>
+
+          <div className="mt-4 flex justify-center">
+            {worker.approved ? (
+              <span className="text-green-600 font-semibold">Approved</span>
+            ) : (
+              <button
+                className="bg-green-500 text-white px-4 py-1 rounded"
+                onClick={() => handleApprove(worker.email)}
+              >
+                Approve
+              </button>
+            )}
+          </div>
+        </div>
+      );
+    })}
+</div>
       {/* Slide Modal */}
       {worker && slideType && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg relative">
-            <h3 className="text-xl font-semibold mb-4 text-center">
+            <h3 className="text-xl font-semibold mb-4 text-center bg-transparent">
               {slideType === 'personal' ? 'Personal Information' : 'Bank Details'}
             </h3>
 
@@ -192,39 +321,65 @@ const CustomerDetails = () => {
                     </>
                   )}
 
-                  {personalStep === 2 && (
-                    <>
-                      <p><strong>Aadhar Number:</strong> {personalDetails.aadharNumber}</p>
-                      {loadingAadhar ? (
-                        <p className="text-sm text-gray-500">Loading Aadhar file...</p>
-                      ) : aadharBase64 ? (
-                        <embed
-                          src={aadharBase64}
-                          type="application/pdf"
-                          width="100%"
-                          height="200px"
-                          className="border"
-                        />
-                      ) : (
-                        <p className="text-red-500">Aadhar file not available.</p>
-                      )}
+{!isMobile && personalStep === 2 && (
+            <>
+              <p><strong>Aadhar Number:</strong> {personalDetails.aadharNumber}</p>
+              {loadingAadhar ? (
+                <p className="text-sm text-gray-500">Loading Aadhar file...</p>
+              ) : aadharBase64 ? (
+                <embed
+                  src={aadharBase64}
+                  type="application/pdf"
+                  className="border w-full h-[100px] md:h-[100px]"
+                />
+              ) : (
+                <p className="text-red-500">Aadhar file not available.</p>
+              )}
 
-                      <p className="mt-4"><strong>PAN Number:</strong> {personalDetails.panNumber}</p>
-                      {loadingPan ? (
-                        <p className="text-sm text-gray-500">Loading PAN file...</p>
-                      ) : panBase64 ? (
-                        <embed
-                          src={panBase64}
-                          type="application/pdf"
-                          width="100%"
-                          height="200px"
-                          className="border"
-                        />
-                      ) : (
-                        <p className="text-red-500">PAN file not available.</p>
-                      )}
-                    </>
-                  )}
+              <p className="mt-4"><strong>PAN Number:</strong> {personalDetails.panNumber}</p>
+              {loadingPan ? (
+                <p className="text-sm text-gray-500">Loading PAN file...</p>
+              ) : panBase64 ? (
+                <embed
+                  src={panBase64}
+                  type="application/pdf"
+                  className="border w-full h-[100px] md:h-[100px]"
+                />
+              ) : (
+                <p className="text-red-500">PAN file not available.</p>
+              )}
+            </>
+          )}
+          {isMobile && personalStep === 2 && (
+  <>
+    <p><strong>Aadhar Number:</strong> {personalDetails.aadharNumber}</p>
+    {loadingAadhar ? (
+      <p className="text-sm text-gray-500">Loading Aadhar file...</p>
+    ) : aadharBase64 ? (
+      <div style={{ maxHeight: '250px', overflowY: 'scroll' }}>
+        <PDFViewer base64={aadharBase64} />
+      </div>
+    ) : (
+      <p className="text-red-500">Aadhar file not available.</p>
+    )}
+  </>
+)}
+
+{isMobile && personalStep === 3 && (
+  <>
+    <p><strong>PAN Number:</strong> {personalDetails.panNumber}</p>
+    {loadingPan ? (
+      <p className="text-sm text-gray-500">Loading PAN file...</p>
+    ) : panBase64 ? (
+      <div style={{ maxHeight: '250px', overflowY: 'scroll' }}>
+        <PDFViewer base64={panBase64} />
+      </div>
+    ) : (
+      <p className="text-red-500">PAN file not available.</p>
+    )}
+  </>
+)}
+
                 </>
               )}
 
