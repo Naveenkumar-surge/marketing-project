@@ -102,7 +102,7 @@ const BookingDetails = () => {
       </div>
 
       {/* Mobile Cards */}
-      <div className="sm:hidden space-y-4 max-h-[70vh] overflow-y-auto pr-2">
+      <div className="sm:hidden space-y-4  max-h-[calc(100vh-4rem)] overflow-y-auto pr-2 pb-[6rem]">
         {filteredBookings.map((b, index) => (
           <div key={index} className="p-4 border rounded shadow bg-white">
             <p><strong>Worker:</strong> {b.workername}</p>

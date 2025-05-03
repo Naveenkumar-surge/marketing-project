@@ -1,6 +1,7 @@
 // Add imports at the top
 import React, { useEffect, useState,useRef } from 'react';
 import axios from 'axios';
+import { toast } from "react-toastify";
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`; // Webpack 5 or Vite
 
@@ -111,10 +112,10 @@ const CustomerDetails = () => {
   const handleApprove = async (email: string) => {
     try {
       await axios.put('https://marketing-nodejs.onrender.com/api/workers/approve', { email });
-      alert('User approved successfully!');
+      toast.success('User approved successfully!');
     } catch (error) {
       console.error('Approval failed:', error);
-      alert('Failed to approve user.');
+      toast.error('Failed to approve user.');
     }
   };
    useEffect(() => {
@@ -126,8 +127,7 @@ const CustomerDetails = () => {
             `https://marketing-nodejs.onrender.com/api/personal-info/filebase64/${personalDetails.aadharFileId}`
           );
           setAadharBase64(`data:application/pdf;base64,${data.base64}`);
-          console.log("yes mobile");
-          console.log(`data:application/pdf;base64,${data.base64}`);
+         
         } catch (error) {
           console.error('Error fetching Aadhar base64:', error);
         } finally {
@@ -163,10 +163,10 @@ const CustomerDetails = () => {
     try {
       await axios.delete(`https://marketing-nodejs.onrender.com/api/personal-info/delete?email=${personalDetails.email}`);
   
-      alert("Personal info deleted and email sent successfully.");
+      toast.success("Personal info deleted and email sent successfully.");
     } catch (error) {
       console.error("Failed to delete personal info or send email:", error);
-      alert("Something went wrong while deleting or sending email.");
+      toast.error("Something went wrong while deleting or sending email.");
     }
   };
   const PDFViewer = ({ base64 }: Props) => {
@@ -256,7 +256,7 @@ const CustomerDetails = () => {
           </button>
         </div>
       </div>
-      <div className="md:hidden max-h-[80vh] overflow-y-auto flex flex-col items-center gap-4 px-4 py-4">
+      <div className="md:hidden max-h-[80vh] overflow-y-auto flex flex-col items-center gap-4 px-4 py-4 pb-[6rem]">
   {workers
     .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
     .map((worker, index) => {

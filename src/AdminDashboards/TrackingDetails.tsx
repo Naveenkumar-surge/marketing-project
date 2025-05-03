@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { toast } from "react-toastify";
 axios.defaults.baseURL = 'https://marketing-nodejs.onrender.com'; // Set backend base URL
 
 // Define the structure of a location item
@@ -68,10 +68,10 @@ const TrackingDetailsTable: React.FC = () => {
       );
       setLocations(updatedLocations);
 
-      alert(`Email sent to ${customerEmail}`);
+      toast.success(`Email sent to ${customerEmail}`);
     } catch (err) {
       console.error('Email send failed:', err);
-      alert('Failed to send email.');
+      toast.error('Failed to send email.');
     } finally {
       setSending((prev) => ({ ...prev, [item._id]: false }));
     }
@@ -163,7 +163,7 @@ const TrackingDetailsTable: React.FC = () => {
 
           {/* Mobile View Scrollable */}
           <div className="md:hidden">
-            <div className="overflow-y-auto max-h-[500px]">
+            <div className="overflow-y-auto max-h-[calc(100vh-4rem)] pb-[6rem]">
               {locations.map((item) => (
                 <div
                   key={item._id}

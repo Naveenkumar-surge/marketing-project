@@ -541,7 +541,7 @@ const handleUserRegister = async (e: React.FormEvent) => {
 {/* About Section */}
 {/* About Section */}
 {activeSection === "about" && (
-  <div className="h-screen overflow-y-auto">
+  <div className="h-screen overflow-y-auto pb-[6rem]">
     <div className="container mx-auto mt-20 p-6">
       {/* What We Offer */}
       <h2 className="text-4xl font-bold mb-6 text-center">What We Offer</h2>
@@ -618,7 +618,7 @@ const handleUserRegister = async (e: React.FormEvent) => {
 
   {/* Career Section */}
   {activeSection === "career" && (
-      <div className="h-screen overflow-y-auto">
+      <div className="h-screen overflow-y-auto pb-[6rem]">
       <div className="container mx-auto mt-20 p-6">
         {/* Section Heading */}
         <h2 className="text-4xl font-bold mb-10 text-center">Our Services</h2>
@@ -687,7 +687,7 @@ const handleUserRegister = async (e: React.FormEvent) => {
 
   {/* Contact Section */}
   {activeSection === "contact" && (
-  <div className="h-screen overflow-y-auto bg-gradient-to-br from-purple-600 to-pink-500 text-white">
+  <div className="h-screen overflow-y-auto bg-gradient-to-br from-purple-600 to-pink-500 text-white pb-[6rem]">
     <div className="container mx-auto mt-20 p-6">
       {/* Section Heading */}
       <h2 className="text-4xl font-bold mb-10 text-center animate-pulse">Contact Us</h2>
