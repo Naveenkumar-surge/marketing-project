@@ -386,7 +386,7 @@ const handleUserRegister = async (e: React.FormEvent) => {
             </div>
           </>
         ) : (
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full mt-6 transition-all duration-300 ease-in-out">
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full max-w-sm mx-auto mt-6 transition-all duration-300 ease-in-out overflow-y-auto max-h-[85vh]">
             {/* User Form or Admin Form */}
             {role === "user" ? (
           <>
@@ -544,9 +544,9 @@ const handleUserRegister = async (e: React.FormEvent) => {
   <div className="h-screen overflow-y-auto pb-[6rem]">
     <div className="container mx-auto mt-20 p-6">
       {/* What We Offer */}
-      <h2 className="text-4xl font-bold mb-6 text-center">What We Offer</h2>
+      <h2 className="text-4xl font-bold mb-6 text-center bg-transparent">What We Offer</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 bg-transparent">
         {[
           {
             icon: "/icons/icon.jpg",
@@ -581,9 +581,9 @@ const handleUserRegister = async (e: React.FormEvent) => {
 
       {/* How It Works */}
       <div className="mt-20">
-        <h2 className="text-4xl font-bold mb-6 text-center">How It Works</h2>
+        <h2 className="text-4xl font-bold mb-6 text-center bg-transparent">How It Works</h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8 text-center">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8 text-center bg-transparent">
           {[
             {
               step: "1",
@@ -603,7 +603,7 @@ const handleUserRegister = async (e: React.FormEvent) => {
           ].map((item, index) => (
             <div
               key={index}
-              className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition flex flex-col items-center"
+              className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition flex flex-col items-center bg-transparent"
             >
               <div className="text-4xl font-bold text-blue-600 mb-4">{item.step}</div>
               <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
@@ -615,13 +615,183 @@ const handleUserRegister = async (e: React.FormEvent) => {
     </div>
   </div>
 )}
+{activeSection === "privacy" && (
+  <div className="h-screen overflow-y-auto pb-[6rem]">
+    <div className="container mx-auto mt-20 p-6">
+      {/* Section Heading */}
+      <h2 className="text-4xl font-bold mb-10 text-center bg-transparent">Privacy Policy</h2>
+
+      {/* Embedded TermsFeed Policy */}
+      <div className="w-full h-[70vh] border rounded-lg shadow-lg overflow-hidden">
+        <iframe
+          src="https://www.termsfeed.com/live/638437d4-b16c-44fb-a55b-54b57166e55d"
+          title="Privacy Policy"
+          width="100%"
+          height="100%"
+          style={{ border: "none" }}
+          sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+        />
+      </div>
+
+      {/* Back to Home Button */}
+      <div className="text-center mt-12">
+        <button
+          onClick={() => setActiveSection("home")}
+          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition bg-transparent"
+        >
+          Back to Home
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+{activeSection === "terms" && (
+  <div className="h-screen overflow-y-auto pb-[6rem]">
+    <div className="container mx-auto mt-20 p-6">
+      {/* Section Heading */}
+      <h2 className="text-4xl font-bold mb-10 text-center bg-transparent">Terms & Conditions</h2>
+
+      {/* Terms Content */}
+      <div className="bg-white border rounded-lg shadow-lg p-6 space-y-6 text-gray-800 max-w-3xl mx-auto">
+        <section>
+          <h3 className="text-2xl font-semibold mb-2">1. Acceptance of Terms</h3>
+          <p>
+            By accessing and using this platform, users (both customers and workers) agree to comply with and be bound by these Terms & Conditions. If you do not agree, please do not use the service.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="text-2xl font-semibold mb-2 bg-transperent">2. Booking & Payment</h3>
+          <ul className="list-disc ml-6 mt-2 space-y-1">
+            <li>Customers must pay for services at the time of booking or as per the platform’s billing rules.</li>
+            <li>Workers must honor the confirmed bookings and be present at the designated time and location.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3 className="text-2xl font-semibold mb-2">3. Service Delivery</h3>
+          <p>
+            Once a worker confirms availability, they are contractually obligated to fulfill the service as scheduled. Failure to do so will result in penalties and may be subject to our <span className="underline">Refund Policy</span>.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="text-2xl font-semibold mb-2">4. Refunds</h3>
+          <p>
+            Refunds will be provided in accordance with our <span className="underline">Refund Policy</span>, especially in cases of no-show or non-performance by the worker.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="text-2xl font-semibold mb-2">5. User Responsibilities</h3>
+          <ul className="list-disc ml-6 space-y-1">
+            <li>Customers must provide accurate service details and be available at the booked time.</li>
+            <li>Workers must provide the agreed service to the best of their ability.</li>
+            <li>No abusive language, fraud, or misconduct will be tolerated on the platform.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3 className="text-2xl font-semibold mb-2">6. Termination</h3>
+          <p>
+            We reserve the right to suspend or terminate any user account for violating our policies, including but not limited to misuse, fraudulent behavior, or repeated cancellations.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="text-2xl font-semibold mb-2">7. Contact Us</h3>
+          <p>
+            For any concerns regarding these terms, please contact our support team at:
+            <br />
+            <strong>Email:</strong> teamservicehelp8@gmail.com
+          </p>
+        </section>
+      </div>
+
+      {/* Back to Home Button */}
+      <div className="text-center mt-12 bg-transparent">
+        <button
+          onClick={() => setActiveSection("home")}
+          className="bg-blue-600 hover:bg-blue-700 font-bold py-3 px-8 rounded-full shadow-lg transition bg-transparent"
+        >
+          Back to Home
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+ {activeSection === "refund" && (
+  <div className="h-screen overflow-y-auto pb-[6rem]">
+    <div className="container mx-auto mt-20 p-6">
+      {/* Section Heading */}
+      <h2 className="text-4xl font-bold mb-10 text-center bg-transparent">Refund Policy</h2>
+
+      {/* Policy Content */}
+      <div className="bg-white border rounded-lg shadow-lg p-6 space-y-6 text-gray-800 max-w-3xl mx-auto">
+        <section>
+          <h3 className="text-2xl font-semibold mb-2">1. Eligibility for Refund</h3>
+          <p>Customers are eligible for a full refund under the following conditions:</p>
+          <ul className="list-disc ml-6 mt-2 space-y-1">
+            <li>The booked worker did not provide the agreed-upon service.</li>
+            <li>Payment has already been made (full or partial).</li>
+            <li>A refund request is submitted within 48 hours of the missed appointment.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3 className="text-2xl font-semibold mb-2">2. Refund Process</h3>
+          <ol className="list-decimal ml-6 mt-2 space-y-2">
+            <li>
+              <strong>Verification:</strong> Admin reviews the booking, service status, and communication logs.
+            </li>
+            <li>
+              <strong>Approval:</strong> Valid claims are approved, and the amount is refunded within 5–7 business days.
+            </li>
+            <li>
+              <strong>Notification:</strong> A confirmation email is sent to the customer after approval.
+            </li>
+          </ol>
+        </section>
+
+        <section>
+          <h3 className="text-2xl font-semibold mb-2">3. Service Non-Performance Examples</h3>
+          <ul className="list-disc ml-6 space-y-1">
+            <li>Worker did not show up at the service location.</li>
+            <li>Worker canceled at the last minute without reason.</li>
+            <li>Worker refused to complete the service.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3 className="text-2xl font-semibold mb-2">4. Exceptions</h3>
+          <ul className="list-disc ml-6 space-y-1">
+            <li>Customer-initiated cancellations outside the allowed window.</li>
+            <li>Subjective dissatisfaction when service was delivered as agreed.</li>
+            <li>Requests made after the 48-hour refund window.</li>
+          </ul>
+        </section>
+      </div>
+
+      {/* Back to Home Button */}
+      <div className="text-center mt-12 bg-transparent">
+        <button
+          onClick={() => setActiveSection("contact")}
+          className="bg-pink-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition bg-transparent"
+        >
+          Contact us
+        </button>
+      </div>
+    </div>
+  </div>
+)}
 
   {/* Career Section */}
   {activeSection === "career" && (
       <div className="h-screen overflow-y-auto pb-[6rem]">
       <div className="container mx-auto mt-20 p-6">
         {/* Section Heading */}
-        <h2 className="text-4xl font-bold mb-10 text-center">Our Services</h2>
+        <h2 className="text-4xl font-bold mb-10 text-center bg-transparent">Our Services</h2>
 
         {/* Two Column Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
@@ -651,7 +821,7 @@ const handleUserRegister = async (e: React.FormEvent) => {
 
           {/* Why Choose Us */}
           <div className="space-y-8">
-            <h2 className="text-3xl font-bold mb-4 text-center md:text-left">
+            <h2 className="text-3xl font-bold mb-4 text-center md:text-left bg-transparent">
               Why Choose King's Hand?
             </h2>
             {[
@@ -660,8 +830,8 @@ const handleUserRegister = async (e: React.FormEvent) => {
               { title: "Reliability", desc: "Trust our professionals to get the job done efficiently." },
               { title: "Quality Service", desc: "Enjoy top-notch service from our skilled and dedicated team." }
             ].map((item, index) => (
-              <div key={index} className="flex items-start space-x-3">
-                <span className="text-blue-600 text-2xl">✓</span>
+              <div key={index} className="flex items-start space-x-3 bg-transparent">
+                <span className="text-blue-600 text-2xl bg-transparent">✓</span>
                 <div>
                   <h4 className="font-bold text-lg">{item.title}</h4>
                   <p className="text-gray-600">{item.desc}</p>
@@ -675,7 +845,7 @@ const handleUserRegister = async (e: React.FormEvent) => {
         <div className="text-center mt-12">
         <button
           onClick={() => setActiveSection("home")} // When clicked, show the home section (login/register form)
-          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition"
+          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition bg-transparent"
         >
           Book Now
         </button>
@@ -684,13 +854,84 @@ const handleUserRegister = async (e: React.FormEvent) => {
     </div>
 )}
 
+{activeSection === "shipping" && (
+  <div className="h-screen overflow-y-auto pb-[6rem]">
+    <div className="container mx-auto mt-20 p-6">
+      {/* Section Heading */}
+      <h2 className="text-4xl font-bold mb-10 text-center bg-transparent">Shipping & Service Fulfillment Policy</h2>
+
+      {/* Policy Content */}
+      <div className="bg-white border rounded-lg shadow-lg p-6 space-y-6 text-gray-800 max-w-3xl mx-auto">
+        <section>
+          <h3 className="text-2xl font-semibold mb-2">1. Service Fulfillment Commitment</h3>
+          <p>
+            Once a worker confirms their availability and the customer books the service,
+            the worker is fully responsible for delivering the service at the scheduled date and time.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="text-2xl font-semibold mb-2">2. Shipping Definition</h3>
+          <p>
+            "Shipping" in this context refers to the timely arrival and proper execution of the service by the booked worker.
+            This includes:
+          </p>
+          <ul className="list-disc ml-6 mt-2 space-y-1">
+            <li>Arriving at the customer’s location on time</li>
+            <li>Carrying out the service as described in the booking</li>
+            <li>Using any required tools or materials agreed upon</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3 className="text-2xl font-semibold mb-2">3. Delays and No-Shows</h3>
+          <ul className="list-disc ml-6 space-y-1">
+            <li>
+              Workers must inform both the customer and the platform in advance if any delay or cancellation is unavoidable.
+            </li>
+            <li>
+              Uninformed delays or failure to show up may result in penalties and impact the worker’s standing on the platform.
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h3 className="text-2xl font-semibold mb-2">4. Customer Assurance</h3>
+          <p>
+            Customers are assured that service delivery is treated with the same importance as product shipping in e-commerce.
+            In cases of failure to fulfill, customers may raise a support request and refer to our <span className="underline">Refund Policy</span>.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="text-2xl font-semibold mb-2">5. Contact for Issues</h3>
+          <p>
+            For any issues related to service delays, non-performance, or support, customers can contact us at:
+            <br />
+            <strong>Email:</strong> teamservicehelp8@gmail.com
+          </p>
+        </section>
+      </div>
+
+      {/* Back to Home Button */}
+      <div className="text-center mt-12">
+        <button
+          onClick={() => setActiveSection("contact")}
+          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition bg-transparent"
+        >
+          Contact us
+        </button>
+      </div>
+    </div>
+  </div>
+)}
 
   {/* Contact Section */}
   {activeSection === "contact" && (
   <div className="h-screen overflow-y-auto bg-gradient-to-br from-purple-600 to-pink-500 text-white pb-[6rem]">
     <div className="container mx-auto mt-20 p-6">
       {/* Section Heading */}
-      <h2 className="text-4xl font-bold mb-10 text-center animate-pulse">Contact Us</h2>
+      <h2 className="text-4xl font-bold mb-10 text-center animate-pulse bg-transparent">Contact Us</h2>
 
       {/* Contact Form */}
       <div className="max-w-lg w-full bg-white shadow-xl p-8 rounded-xl text-gray-900 mx-auto"> {/* Added mx-auto here to center on desktop */}

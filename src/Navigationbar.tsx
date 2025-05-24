@@ -35,13 +35,25 @@ const NavigationBar: React.FC<{ setActiveSection: (section: string) => void }> =
             <button onClick={() => handleLinkClick("home")} className="hover:text-gray-300">Home</button>
           </li>
           <li>
+            <button onClick={() => handleLinkClick("terms")} className="hover:text-gray-300">Terms&Conditions</button>
+          </li>
+          <li>
+            <button onClick={() => handleLinkClick("privacy")} className="hover:text-gray-300">privacy policy</button>
+          </li>
+          <li>
             <button onClick={() => handleLinkClick("about")} className="hover:text-gray-300">About</button>
           </li>
           <li>
-            <button onClick={() => handleLinkClick("career")} className="hover:text-gray-300">Career</button>
+            <button onClick={() => handleLinkClick("career")} className="hover:text-gray-300">careers</button>
+          </li>
+          <li>
+            <button onClick={() => handleLinkClick("shipping")} className="hover:text-gray-300">shipping&policy</button>
           </li>
           <li>
             <button onClick={() => handleLinkClick("contact")} className="hover:text-gray-300">Contact Us</button>
+          </li>
+          <li>
+            <button onClick={() => handleLinkClick("refund")} className="hover:text-gray-300">Refund policy</button>
           </li>
           <li>
             <a
@@ -65,6 +77,16 @@ const NavigationBar: React.FC<{ setActiveSection: (section: string) => void }> =
                 Home
               </button>
             </li>
+             <li>
+              <button onClick={() => handleLinkClick("terms")} className="hover:text-gray-300 w-full text-left">
+                Terms&Conditions
+              </button>
+            </li>
+             <li>
+              <button onClick={() => handleLinkClick("privacy")} className="hover:text-gray-300 w-full text-left">
+                privacy policy
+              </button>
+            </li>
             <li>
               <button onClick={() => handleLinkClick("about")} className="hover:text-gray-300 w-full text-left">
                 About
@@ -75,9 +97,19 @@ const NavigationBar: React.FC<{ setActiveSection: (section: string) => void }> =
                 Career
               </button>
             </li>
+             <li>
+              <button onClick={() => handleLinkClick("shipping")} className="hover:text-gray-300 w-full text-left">
+               shipping&policy
+              </button>
+            </li>
             <li>
               <button onClick={() => handleLinkClick("contact")} className="hover:text-gray-300 w-full text-left">
                 Contact Us
+              </button>
+            </li>
+             <li>
+              <button onClick={() => handleLinkClick("refund")} className="hover:text-gray-300 w-full text-left">
+                Refund policy
               </button>
             </li>
             <li>
