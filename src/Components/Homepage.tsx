@@ -386,7 +386,7 @@ const handleUserRegister = async (e: React.FormEvent) => {
             </div>
           </>
         ) : (
-          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full max-w-sm mx-auto mt-6 transition-all duration-300 ease-in-out overflow-y-auto max-h-[70vh]">
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full max-w-sm mx-auto mt-6 transition-all duration-300 ease-in-out overflow-y-auto max-h-[70vh] sm:max-h-full">
             {/* User Form or Admin Form */}
             {role === "user" ? (
           <>
