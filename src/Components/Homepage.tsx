@@ -332,32 +332,32 @@ const handleUserRegister = async (e: React.FormEvent) => {
     </div>
   )}
   
-{activeSection === "home" && (
-  <div className="relative w-full min-h-screen bg-white sm:bg-gray-100 overflow-y-auto sm:overflow-hidden">
+  {activeSection === "home" && (
+  <div className="relative w-full h-screen bg-white sm:bg-gray-100"> 
     <video autoPlay loop muted className="absolute w-full h-full object-cover hidden sm:block">
       <source src="/videos/background.mp4" type="video/mp4" />
     </video>
 
     {/* Mobile view card container for the video */}
     {!role && (
-      <div className="sm:hidden relative w-full h-full bg-white">
-        <div className="w-full h-full flex justify-center items-center bg-white shadow-xl rounded-lg object-cover p-4 overflow-hidden">
-          <video
-            playsInline
-            preload="metadata"
-            controls
-            className="w-full h-auto rounded-lg brightness-100 z-10"
-          >
-            <source src="/videos/intro.mp4" type="video/mp4" />
-          </video>
-        </div>
-      </div>
-    )}
+  <div className="sm:hidden relative w-full h-full bg-white">
+    <div className="w-full h-full flex justify-center items-center bg-white shadow-xl rounded-lg object-cover p-4 overflow-hidden">
+      <video
+        playsInline
+        preload="metadata"
+        controls
+        className="w-full h-auto rounded-lg brightness-100 z-10"
+      >
+        <source src="/videos/intro.mp4" type="video/mp4" />
+      </video>
+    </div>
+  </div>
+)}
 
     {/* Content container */}
     <div className="absolute inset-0 flex flex-col justify-start items-center bg-black bg-opacity-60 sm:bg-transparent pt-10 sm:pt-20">
-      <div className="w-full sm:w-96 p-6 sm:h-auto min-h-full overflow-y-auto sm:overflow-visible">
-        {/* Title */}
+      <div className="w-full sm:w-96 p-6 sm:h-auto h-full overflow-y-auto">
+        {/* Title with margin-top to avoid overlap */}
         <h1 className="text-white text-3xl font-extrabold mb-6 sm:text-4xl text-center bg-transparent sm:absolute sm:top-16 sm:left-1/2 sm:transform sm:-translate-x-1/2">
           Welcome to markting service
         </h1>
@@ -365,8 +365,8 @@ const handleUserRegister = async (e: React.FormEvent) => {
         {/* Role Selection or Form based on User's Choice */}
         {!role ? (
           <>
-            {/* Buttons for mobile view */}
-            <div className="sm:hidden fixed bottom-12 left-0 right-0 flex justify-center space-x-4 z-50">
+            {/* Buttons for mobile view, positioned at the bottom */}
+            <div className="sm:hidden absolute bottom-12 left-0 right-0 flex justify-center space-x-4">
               <button onClick={() => setRole("user")} className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition-all duration-300 ease-in-out">
                 User
               </button>
@@ -375,7 +375,7 @@ const handleUserRegister = async (e: React.FormEvent) => {
               </button>
             </div>
 
-            {/* Desktop buttons */}
+            {/* Buttons for desktop view, centered (hidden on mobile) */}
             <div className="hidden sm:flex sm:flex-row sm:space-x-6 sm:justify-center sm:items-center sm:w-full sm:max-w-xs sm:absolute sm:top-1/2 sm:left-1/2 sm:transform sm:-translate-x-1/2 sm:-translate-y-1/2">
               <button onClick={() => setRole("user")} className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition-all duration-300 ease-in-out">
                 User
@@ -386,151 +386,154 @@ const handleUserRegister = async (e: React.FormEvent) => {
             </div>
           </>
         ) : (
-          <div className="overflow-y-auto max-h-[85vh] sm:max-h-full p-4">
+          <div className="overflow-y-auto max-h-[80vh] sm:max-h-full">
             {/* User Form or Admin Form */}
             {role === "user" ? (
-              <>
-                <h2 className="text-xl font-bold text-center mb-4 text-gray-700 bg-transparent">{isUserRegistered ? "User Login" : "User Registration"}</h2>
-                {message && (
-                  <div className={`p-3 rounded text-white text-center ${messageType === "success" ? "bg-green-500" : "bg-red-500"}`}>
-                    {message}
-                  </div>
-                )}
-                <form onSubmit={isUserRegistered ? handleUserLogin : handleUserRegister} className="space-y-4">
-                  {!isUserRegistered && (
+          <>
+            <h2 className="text-xl font-bold text-center mb-4 text-gray-700 bg-transparent">{isUserRegistered ? "User Login" : "User Registration"}</h2>
+            {message && (
+              <div className={`p-3 rounded text-white text-center ${messageType === "success" ? "bg-green-500" : "bg-red-500"}`}>
+                {message}
+              </div>
+            )}
+            <form onSubmit={isUserRegistered ? handleUserLogin : handleUserRegister} className="space-y-4">
+              {/* Default to User Registration */}
+              {!isUserRegistered && (
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Full Name"
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+                  onChange={handleChange}
+                  required
+                />
+              )}
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+                onChange={handleChange}
+                required
+              />
+
+              {/* Contact Number (Only for Registration) */}
+              {!isUserRegistered && (
+                <div className="mb-4">
+                  <div className="flex">
                     <input
                       type="text"
-                      name="name"
-                      placeholder="Full Name"
+                      value={contactNumber}
+                      onChange={(e) => handleContactNumberChange(e.target.value)}
+                      placeholder="Enter your contact number"
                       className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
-                      onChange={handleChange}
-                      required
+                      disabled={otpVerified}
                     />
-                  )}
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
-                    onChange={handleChange}
-                    required
-                  />
+                    <button
+                      onClick={handleSendOtp}
+                      disabled={loading || otpVerified}
+                      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+                    >
+                      {loading ? "Sending..." : "Send OTP"}
+                    </button>
+                  </div>
+                </div>
+              )}
 
-                  {!isUserRegistered && (
-                    <div className="mb-4">
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          value={contactNumber}
-                          onChange={(e) => handleContactNumberChange(e.target.value)}
-                          placeholder="Enter your contact number"
-                          className="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
-                          disabled={otpVerified}
-                        />
-                        <button
-                          onClick={handleSendOtp}
-                          disabled={loading || otpVerified}
-                          className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300"
-                        >
-                          {loading ? "Sending..." : "Send OTP"}
-                        </button>
-                      </div>
-                    </div>
-                  )}
+              {/* OTP Verification (Only for Registration) */}
+              {!isUserRegistered && otpSent && !otpVerified && (
+                <div className="mb-4">
+                  <div className="flex">
+                    <input
+                      type="text"
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                      placeholder="Enter OTP"
+                      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+                    />
+                    <button
+                      onClick={handleVerifyOtp}
+                      disabled={loading}
+                      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+                    >
+                      {loading ? "Verifying..." : "Verify OTP"}
+                    </button>
+                  </div>
+                </div>
+              )}
 
-                  {!isUserRegistered && otpSent && !otpVerified && (
-                    <div className="mb-4">
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          value={otp}
-                          onChange={(e) => setOtp(e.target.value)}
-                          placeholder="Enter OTP"
-                          className="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
-                        />
-                        <button
-                          onClick={handleVerifyOtp}
-                          disabled={loading}
-                          className="p-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-300"
-                        >
-                          {loading ? "Verifying..." : "Verify OTP"}
-                        </button>
-                      </div>
-                    </div>
-                  )}
+              {otpVerified && (
+                <div className="text-green-600 font-semibold">OTP Verified ✅</div>
+              )}
 
-                  {otpVerified && (
-                    <div className="text-green-600 font-semibold">OTP Verified ✅</div>
-                  )}
-
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+                onChange={handleChange}
+                required
+              />
+              {!isUserRegistered && (
+                <>
                   <input
                     type="password"
-                    name="password"
-                    placeholder="Password"
+                    name="confirmPassword"
+                    placeholder="Confirm Password"
                     className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
                     onChange={handleChange}
                     required
                   />
-                  {!isUserRegistered && (
-                    <>
-                      <input
-                        type="password"
-                        name="confirmPassword"
-                        placeholder="Confirm Password"
-                        className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
-                        onChange={handleChange}
-                        required
-                      />
-                      <select
-                        name="userType"
-                        className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
-                        onChange={handleChange}
-                        required
-                      >
-                        <option value="">Choose Type</option>
-                        <option value="customer">Customer</option>
-                        <option value="worker">Worker</option>
-                      </select>
-                    </>
-                  )}
-                  <button className="w-full bg-blue-500 text-white py-2 rounded-lg shadow-md hover:bg-blue-600 transition-all duration-300">
-                    {isUserRegistered ? "Login" : "Register"}
-                  </button>
-                </form>
-                <p className="text-center text-sm text-gray-600 mt-2 bg-transparent">
-                  {isUserRegistered ? "Not registered? " : "Already registered? "}
-                  <button onClick={() => setIsUserRegistered(!isUserRegistered)} className="text-blue-500 hover:underline bg-transparent">
-                    {isUserRegistered ? "Register here" : "Login here"}
-                  </button>
-                </p>
-              </>
-            ) : (
-              <>
-                <h2 className="text-xl font-bold text-center mb-4 text-gray-700 bg-transparent">Admin Login</h2>
-                <form onSubmit={handleAdminLogin} className="space-y-4">
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Admin Email"
+                  <select
+                    name="userType"
                     className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
                     onChange={handleChange}
                     required
-                  />
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
-                    onChange={handleChange}
-                    required
-                  />
-                  <button className="w-full bg-green-500 text-white py-2 rounded-lg shadow-md hover:bg-green-600 transition-all duration-300">Login</button>
-                </form>
-              </>
-            )}
-            <button onClick={() => setRole(null)} className="w-full mt-4 text-gray-500 hover:underline transition-all duration-300">Back</button>
-          </div>
+                  >
+                    <option value="">Choose Type</option>
+                    <option value="customer">Customer</option>
+                    <option value="worker">Worker</option>
+                  </select>
+                </>
+              )}
+              <button className="w-full bg-blue-500 text-white py-2 rounded-lg shadow-md hover:bg-blue-600 transition-all duration-300">
+                {isUserRegistered ? "Login" : "Register"}
+              </button>
+            </form>
+            <p className="text-center text-sm text-gray-600 mt-2 bg-transparent">
+              {isUserRegistered ? "Not registered? " : "Already registered? "}
+              <button onClick={() => setIsUserRegistered(!isUserRegistered)} className="text-blue-500 hover:underline bg-transparent">
+                {isUserRegistered ? "Register here" : "Login here"}
+              </button>
+            </p>
+          </>
+        ) : (
+          <>
+            <h2 className="text-xl font-bold text-center mb-4 text-gray-700 bg-transparent">Admin Login</h2>
+            <form onSubmit={handleAdminLogin} className="space-y-4">
+              <input
+                type="email"
+                name="email"
+                placeholder="Admin Email"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+                onChange={handleChange}
+                required
+              />
+              <button className="w-full bg-green-500 text-white py-2 rounded-lg shadow-md hover:bg-green-600 transition-all duration-300">Login</button>
+            </form>
+          </>
         )}
+        <button onClick={() => setRole(null)} className="w-full mt-4 text-gray-500 hover:underline transition-all duration-300">Back</button>
+      </div>
+    )}
       </div>
     </div>
   </div>
