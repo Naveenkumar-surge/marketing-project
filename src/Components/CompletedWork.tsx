@@ -50,7 +50,7 @@ const CompletedWork = () => {
   {completed.length === 0 ? (
     <p className="text-gray-700 bg-transparent">No work has been marked as completed yet.</p>
   ) : (
-    <div className="space-y-4 pb-[6rem]">
+    <div className="space-y-4">
       {completed.map((booking, index) => (
         <div
           key={index}
