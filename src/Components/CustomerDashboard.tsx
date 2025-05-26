@@ -355,10 +355,10 @@ setLocationData(dat);
     
             // Step 2: Open Razorpay payment window
             const options = {
-                key: "rzp_test_x4xQ73ZzUCuHhh", // your Razorpay test key
+                key: "rzp_live_0cdo6yosjt7OZH", // your Razorpay test key
                 amount: worker.price * 100,
                 currency: "INR",
-                name: "Worker Booking",
+                name: "Marketing Booking",
                 description: `Booking for ${selectedService}`,
                 handler: async function (response: any) {
                     // Step 3: Update payment status
@@ -422,7 +422,7 @@ setLocationData(dat);
                     fetchAvailableWorkers();
                 },
                 prefill: {
-                    email: "naveenkumarpothunedi@example.com"
+                    email: userEmail
                 },
                 theme: {
                     color: "#22c55e"
