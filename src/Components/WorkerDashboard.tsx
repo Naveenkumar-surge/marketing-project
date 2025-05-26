@@ -92,35 +92,21 @@ const WorkerDashboard: React.FC<WorkerDashboardProps> = ({ onLogout }) => {
       <div className="flex-1 p-4 md:p-10 overflow-y-auto">
         
         {/* Topbar for Desktop */}
-        <header className="fixed top-0 left-0 right-0 bg-blue-900 text-white flex items-center justify-between px-4 py-2 shadow-md z-50 md:static">
-  {/* Left: Circle with Initials */}
-  <div className="relative group flex items-center ml-2 mr-4 custom-circle-wrapper">
-    <div className="bg-blue-500 rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold uppercase cursor-pointer">
-      {workerName ? workerName.slice(0, 2) : 'NA'}
-    </div>
-    {/* Tooltip: Show Full Name on Hover */}
-    <div className="absolute top-12 left-1/2 transform -translate-x-1/2 bg-white text-black text-xs font-semibold px-3 py-1 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap">
-      {workerName}
-    </div>
-  </div>
+        <header className="fixed top-0 left-0 right-0 bg-blue-900 text-white px-4 py-2 shadow-md z-50 flex flex-row items-center justify-between">
+  {/* Title */}
+  <h2 className="text-lg font-semibold">
+    Welcome to worker Dashboard
+  </h2>
 
-  {/* Center: Title */}
-  <div className="flex-1 flex justify-center items-center -mt-1">
-    <h2 className="text-lg font-semibold text-center help">
-      Welcome to Worker Portal
-    </h2>
-  </div>
-
-  {/* Right: Logout Button */}
-  <div className="flex items-center mr-2">
-    <button
-      onClick={onLogout}
-      className="bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-2 rounded"
-    >
-      Logout
-    </button>
-  </div>
+  {/* Logout Button */}
+  <button
+    onClick={onLogout}
+    className="bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-2 rounded"
+  >
+    Logout
+  </button>
 </header>
+
 
 
         {/* Main Content */}
