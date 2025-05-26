@@ -317,125 +317,113 @@ setLocationData(dat);
     }, [selectedService, fromDate, toDate]);
 
     const handlePayment = async (worker: Worker) => {
-        try {
-            // Step 1: Create booking + Razorpay order
-            const bookingResponse = await fetch("https://marketing-nodejs.onrender.com/bookings/create", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    customername:userName,
-                    customerEmail: userEmail, 
-                    workername:worker.name,// Replace with actual logged-in email
-                    workerEmail: worker.email,
-                    service: selectedService,
-                    fromDate,
-                    toDate,
-                    price: worker.price
-                })
-            });
-            console.log("Sending booking data:", {
-                customername:userName,
-                customerEmail: userEmail, 
-                workername:worker.name,// Replace with actual logged-in email
+    try {
+        // Step 1: Create booking + Razorpay order
+        const bookingResponse = await fetch("https://marketing-nodejs.onrender.com/bookings/create", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                customername: userName,
+                customerEmail: userEmail,
+                workername: worker.name,
                 workerEmail: worker.email,
                 service: selectedService,
                 fromDate,
                 toDate,
                 price: worker.price
-              });
-              
-            const bookingData = await bookingResponse.json();
-    
-            if (!bookingData.orderId || !bookingData.bookingId) {
-                toast.error("Failed to create booking");
-                return;
-            }
-    
-            // Step 2: Open Razorpay payment window
-            const options = {
-                key: "rzp_live_0cdo6yosjt7OZH", // your Razorpay test key
-                amount: worker.price * 100,
-                currency: "INR",
-                name: "Marketing Booking",
-                description: `Booking for ${selectedService}`,
-                handler: async function (response: any) {
-                    // Step 3: Update payment status
-                    await fetch("https://marketing-nodejs.onrender.com/bookings/updatePayment", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            bookingId: bookingData.bookingId,
-                            paymentId: response.razorpay_payment_id
-                        })
-                    });
-    
-                    toast.success("Payment Successful!");
-                    
-                    if (userEmail && worker?.email) {
-                      try {
-                        const res = await fetch(`https://marketing-nodejs.onrender.com/api/auth/location/${userEmail}`);
-                        const data = await res.json();
-                
-                        if (!data || !data.latitude || !data.longitude) {
-                          toast.error("Stored location not found.");
-                        } else {
-                          const sendRes = await fetch("https://marketing-nodejs.onrender.com/api/auth/send-location-email", {
+            })
+        });
+
+        const bookingData = await bookingResponse.json();
+
+        if (!bookingData.orderId || !bookingData.bookingId) {
+            toast.error("Failed to create booking");
+            return;
+        }
+
+        const options = {
+            key: "rzp_live_0cdo6yosjt7OZH",
+            amount: worker.price * 100,
+            currency: "INR",
+            name: "Marketing Booking",
+            description: `Booking for ${selectedService}`,
+            order_id: bookingData.orderId,
+            handler: async function (response: any) {
+                const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
+
+                // Step 3: Verify payment
+                await fetch("https://marketing-nodejs.onrender.com/bookings/updatePayment", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        bookingId: bookingData.bookingId,
+                        razorpay_payment_id,
+                        razorpay_order_id,
+                        razorpay_signature
+                    })
+                });
+
+                toast.success("Payment Successful!");
+
+                // Send location email
+                try {
+                    const res = await fetch(`https://marketing-nodejs.onrender.com/api/auth/location/${userEmail}`);
+                    const data = await res.json();
+
+                    if (!data || !data.latitude || !data.longitude) {
+                        toast.error("Stored location not found.");
+                    } else {
+                        await fetch("https://marketing-nodejs.onrender.com/api/auth/send-location-email", {
                             method: "POST",
                             headers: {
-                              "Content-Type": "application/json"
+                                "Content-Type": "application/json"
                             },
                             body: JSON.stringify({
-                              customerEmail: userEmail,
-                              workerEmail: worker.email,
-                              latitude: data.latitude,
-                              longitude: data.longitude,
-                              label: data.label || ""
+                                customerEmail: userEmail,
+                                workerEmail: worker.email,
+                                latitude: data.latitude,
+                                longitude: data.longitude,
+                                label: data.label || ""
                             })
-                          });
-                
-                          const sendData = await sendRes.json();
-                          console.log("Email response:", sendData);
-                          toast.success("Location sent to the worker successfully!");
-                        }
-                      } catch (error) {
-                        console.error("Error sending location to worker:", error);
-                        toast.error("Failed to send location.");
-                      }
+                        });
+
+                        toast.success("Location sent to the worker successfully!");
                     }
-                    // Step 4: Mark worker as busy (optional - backend should handle this ideally)
-                    await fetch("https://marketing-nodejs.onrender.com/api/markBusy", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({ workerEmail: worker.email })
-                    });
-                    
-                      
-                        // send the fetch request here
-                        
-                    // You can refresh worker list or redirect here
-                    fetchAvailableWorkers();
-                },
-                prefill: {
-                    email: userEmail
-                },
-                theme: {
-                    color: "#22c55e"
+                } catch (error) {
+                    console.error("Error sending location:", error);
+                    toast.error("Failed to send location.");
                 }
-            };
-    
-            const razorpay = new (window as any).Razorpay(options);
-            razorpay.open();
-        } catch (error) {
-            console.error("Payment error:", error);
-            toast.error("Something went wrong during the booking process.");
-        }
-    };
+
+                // Mark worker busy
+                await fetch("https://marketing-nodejs.onrender.com/api/markBusy", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ workerEmail: worker.email })
+                });
+
+                fetchAvailableWorkers();
+            },
+            prefill: {
+                email: userEmail
+            },
+            theme: {
+                color: "#22c55e"
+            }
+        };
+
+        const razorpay = new (window as any).Razorpay(options);
+        razorpay.open();
+    } catch (error) {
+        console.error("Payment error:", error);
+        toast.error("Something went wrong during the booking process.");
+    }
+};
 
 
 return (
