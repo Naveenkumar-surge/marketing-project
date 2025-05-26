@@ -68,7 +68,7 @@ const BookingHistory = () => {
           </table>
 
           {/* Mobile Scrollable Card View */}
-          <div className="md:hidden flex flex-col gap-4 overflow-y-auto max-h-[70vh] pr-2">
+          <div className="md:hidden flex flex-col gap-4 overflow-y-auto max-h-[70vh] pr-2 pb-[6rem]">
             {completed.map((booking, index) => (
               <div key={index} className="border rounded-lg shadow p-4 bg-white">
                 <p className="text-sm"><span className="font-semibold">Customer Name:</span> {booking.customername || 'N/A'}</p>
