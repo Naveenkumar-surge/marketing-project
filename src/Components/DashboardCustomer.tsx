@@ -32,7 +32,7 @@ const DashboardCustomer = () => {
     try {
       const res = await axios.get(`https://marketing-nodejs.onrender.com/api/by-customer/${email}`);
       const filtered = res.data.filter(
-        (b: any) => b.workcomplted=== 'pending' && b.paymentStatus === 'Paid'
+        (b: any) => b.workcomplted=== 'Pending' && b.paymentStatus === 'Paid'
       );
       setBookings(filtered);
     } catch (error) {
