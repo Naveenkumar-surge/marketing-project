@@ -85,11 +85,11 @@ const DashboardContent = () => {
         return;
       }
   
-      const enteredPrice = parseInt(price, 10);
-      if (enteredPrice < 1000 || enteredPrice > 65000) {
-        toast.error("Price must be between ₹1000 and ₹65000.");
-        return;
-      }
+      // const enteredPrice = parseInt(price, 10);
+      // if (enteredPrice < 1000 || enteredPrice > 65000) {
+      //   toast.error("Price must be between ₹1000 and ₹65000.");
+      //   return;
+      // }
   
       const workerData = {
         name: worker,
@@ -199,7 +199,7 @@ const DashboardContent = () => {
             </label>
             <input
               type="number"
-              placeholder="₹1000 - ₹65000"
+              placeholder="₹1 - ₹65000"
               value={price}
               onChange={handlePriceChange}
               className="border rounded px-2 py-2 w-full text-sm"
