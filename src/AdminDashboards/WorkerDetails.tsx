@@ -460,7 +460,7 @@ const WorkerDetails = () => {
                     </>
                   )}
 
-                  {bankStep === 1 && (
+                  {!isMobile && bankStep === 1 && (
                     <>
                       <p><strong>Bank Document:</strong></p>
                       {loadingBankDoc ? (
@@ -472,6 +472,22 @@ const WorkerDetails = () => {
                       )}
                     </>
                   )}
+            {isMobile && bankStep === 1 && (
+  <>
+    <p><strong>Bank Document:</strong></p>
+    {loadingBankDoc ? (
+      <p className="text-sm text-gray-500">Loading document...</p>
+    ) : bankDocBase64 && bankDocBase64.startsWith("data:application/pdf") ? (
+      <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
+        <PDFViewer base64={bankDocBase64} />
+      </div>
+    ) : (
+      <p className="text-red-500">Document not available.</p>
+    )}
+  </>
+)}
+
+
                 </>
               )}
             </div>
